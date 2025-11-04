@@ -4,13 +4,21 @@ from scipy.constants import c, epsilon_0, pi
 
 # Accelerated Charge Class
 class AcceleratedCharge:
-    def __init__(self, q, beta_dot, accel_axis='z', beta0=0.0, vel_axis='x', r0=np.zeros(3)):
+    def __init__(self, q, alpha_proper, accel_axis='z', beta0=0.0, vel_axis='x', r0=np.zeros(3)):
         self.q = q
-        self.beta_dot = beta_dot
+        self.alpha_proper = alpha_proper    
         self.accel_axis = accel_axis
         self.vel_axis = vel_axis
-        self.beta0 = beta0
+        self.beta0 = beta0                 
         self.r0 = np.array(r0, dtype=float)
+        
+        self.gamma0 = 1.0 / np.sqrt(1.0 - self.beta0**2)
+
+        axes = {'x':0, 'y':1, 'z':2}
+        if self.vel_axis == self.accel_axis:
+            self.beta_dot = self.alpha_proper / (self.gamma0**3)
+        else:
+            self.beta_dot = self.alpha_proper / self.gamma0
 
     def position(self, t):
         pos = self.r0.copy()
@@ -33,6 +41,7 @@ class AcceleratedCharge:
         axes = {'x':0, 'y':1, 'z':2}
         vec[axes[self.accel_axis]] = self.beta_dot
         return vec
+
 # Retarded time Calculation
 def retarded_time(charge, r_obs, t_obs, tol=1e-15, maxiter=100):
     tr = t_obs
