@@ -14,18 +14,12 @@ class AcceleratedCharge:
 
     def position(self, t):
         pos = self.r0.copy()
-        delta_vel = self.beta0 * c * t
-        delta_acc = 0.5 * self.beta_dot * c * t**2
-        axes = {'x':0, 'y':1, 'z':2}
-        pos[axes[self.vel_axis]] += delta_vel
-        pos[axes[self.accel_axis]] += delta_acc
         return pos
 
     def velocity(self, t):
         vel = np.zeros(3)
         axes = {'x':0, 'y':1, 'z':2}
         vel[axes[self.vel_axis]] = self.beta0 * c
-        vel[axes[self.accel_axis]] += self.beta_dot * c * t
         return vel / c
 
     def beta_dot_vec(self):
@@ -79,7 +73,7 @@ def angular_radiated_power(charge, t_obs, theta_vals, phi_vals=None):
     return np.array(dP)
 
 theta_vals = np.linspace(0, 2*pi, 300)
-t_obs_sample = 1e-13 
+t_obs_sample = 1e-19 
 q = 1e-19
 beta0_values = [0.1, 0.9, 0.99]
 cases = [(0.3, 'z', 'x'),
