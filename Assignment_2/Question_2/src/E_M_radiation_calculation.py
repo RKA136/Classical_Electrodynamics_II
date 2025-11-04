@@ -55,7 +55,8 @@ def radiation_field(charge, r_obs, t_obs):
         n = R_vec / R
         beta = charge.velocity(tr)
         beta_dot = charge.beta_dot_vec()
-        E = (charge.q/(4*pi*epsilon_0*c)) * np.cross(n, np.cross(n - beta, beta_dot)) / R
+        k = 1 - np.dot(n, beta)
+        E = (charge.q/(4*pi*epsilon_0*c)) * np.cross(n, np.cross(n - beta, beta_dot)) / (R * k**3)
         B = np.cross(n, E) / c
         E_list.append(E)
         B_list.append(B)
