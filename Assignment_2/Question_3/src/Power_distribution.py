@@ -75,16 +75,14 @@ def angular_radiated_power(charge, t_obs, theta_vals, phi_vals=None):
 theta_vals = np.linspace(0, 2*pi, 300)
 t_obs_sample = 1e-19 
 q = 1e-19
-beta0_values = [0.1, 0.9, 0.99]
+beta0_values = [0.1, 0.9, 0.999]
 cases = [(0.3, 'z', 'x'),
          (0.9, 'x', 'x')]
 
 for beta_dot, accel_axis, vel_axis in cases:
     for beta0 in beta0_values:
         charge = AcceleratedCharge(q, beta_dot, accel_axis=accel_axis, vel_axis=vel_axis, beta0=beta0)
-        power_vals = angular_radiated_power(charge, t_obs_sample, theta_vals)
-        idx = np.argmax(power_vals)
-        print("peak θ (deg) =", np.degrees(theta_vals[idx]))    
+        power_vals = angular_radiated_power(charge, t_obs_sample, theta_vals)   
         plt.figure(figsize=(8,8))
         ax = plt.subplot(111, projection='polar')
         ax.plot(theta_vals, power_vals, color='darkorange', lw=2)
