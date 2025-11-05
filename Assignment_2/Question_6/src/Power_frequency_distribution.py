@@ -9,7 +9,7 @@ def bremsstrahlung_power(nu, T, prefactor=1.0):
 
 
 # Frequency Range
-nu = np.logspace(8, 20, 1200)          
+nu = np.logspace(11, 20, 1200)          
 
 # Temperatures
 T1 = 300
@@ -25,7 +25,7 @@ plt.loglog(nu, P2, linewidth=2.0, label="T = 10⁶ K")
 plt.title("Thermal Bremsstrahlung Power Spectrum\n(Arbitrary Units)", fontsize=14, fontweight="bold")
 plt.xlabel("Frequency ν  [Hz]", fontsize=12)
 plt.ylabel("Power per Unit Frequency  [a.u.]", fontsize=12)
-
+plt.ylim(10**(-30),1)
 plt.grid(which="both", linestyle="--", linewidth=0.6, alpha=0.7)
 plt.legend(fontsize=11, loc="upper right")
 plt.tight_layout()
